@@ -39,6 +39,11 @@ def create
   if @user.save
     login!
     render json: {
+      status: :created,
+      user: @user
+    }
+  else
+    render json: {
       status: 500,
       errors: @user.errors.full_messages
     }
