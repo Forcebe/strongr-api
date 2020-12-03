@@ -41,11 +41,11 @@ def show
   end
 end
 
-# NOT WORKING: Can't add routine to current_user.routines
+
 def create
   @routine = Routine.new (routine_params)
   if @routine.save
-    @current_user.routines << @routine
+    current_user.routines << @routine
     render json: {
       status: created,
       routine: @routine
@@ -61,6 +61,17 @@ end
 def destroy
   routine = Routine.find params[:id]
   routine.destroy
+end
+
+def update
+  routine = Routine.find params[:id]
+  routine.update routine_params
+  if routine.save
+    render json: {
+      status: 'updated',
+      routines: current_user.routines
+    }
+  end
 end
 
 def routine_params
